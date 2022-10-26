@@ -1,0 +1,28 @@
+version: '3'
+services:
+    
+    nginx:
+        container_name : nginx
+        build : ./nginx
+        image: 229008561202.dkr.ecr.ap-northeast-2.amazonaws.com/themedium-ecr-nginx:v1.0
+        restart: always
+        ports:
+            - "80:80"
+        volumes:
+            - /srv/docker-server
+            - /var/log/nginx
+        depends_on:
+            - django
+        links:
+            - django
+
+            
+    django:
+        container_name : django
+        build : ./baemin
+        image: 229008561202.dkr.ecr.ap-northeast-2.amazonaws.com/themedium-ecr-django:v1.0
+        restart: always
+        command: uwsgi --socket :8000 --ini uwsgi.ini
+        volumes:
+            - /srv/docker-server
+            - /var/log/uwsgi
