@@ -46,7 +46,7 @@
     "memory": "512",
     "cpu": "256",
     "executionRoleArn": "arn:aws:iam::229008561202:role/ecsTaskRole",
-    "tags": [],
     "family": "fargate-task",
-    "taskRoleArn": "arn:aws:iam::229008561202:role/ecsTaskRole"
+    "taskRoleArn": "arn:aws:iam::229008561202:role/ecsTaskRole",
+    "tags": []
 }
