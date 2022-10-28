@@ -29,7 +29,7 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: 229008561202
         ECR_REPOSITORY: themedium-ecr-django
         IMAGE_TAG: sha256:3f0e273f18fd67a66b0860aad1e2baee179b58911fb56d40cbe02f7320152832
       run: |
