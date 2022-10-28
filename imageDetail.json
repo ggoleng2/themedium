@@ -1,0 +1,8 @@
+{
+"name": "django",
+"ImageURI": "229008561202.dkr.ecr.ap-northeast-2.amazonaws.com/themedium-ecr-django:v1.0"
+}
+{
+"name": "nginx",
+"imageUri": "229008561202.dkr.ecr.ap-northeast-2.amazonaws.com/themedium-ecr-nginx:v1.0"
+}
