@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'order',
     'boss',
     'delivery',
-    'rest_framework'
+    'rest_framework',
+    'home'
 ]
 
 MIDDLEWARE = [
