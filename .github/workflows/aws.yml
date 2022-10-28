@@ -28,16 +28,19 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # set this to your Amazon ECR repository name
-  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
+  AWS_REGION: ap-northeast-2                   # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY1: themedium-ecr-django           # set this to your Amazon ECR repository name
+  ECR_REPOSITORY2: themedium-ecr-nginx           # set this to your Amazon ECR repository name
+  ECS_SERVICE: fargate-service                 # set this to your Amazon ECS service name
+  ECS_CLUSTER: fargate-cluster                 # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: fargate-task # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
+  CONTAINER_NAME1: django           # set this to the name of the container in the
+  CONTAINER_NAME2: nginx           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 permissions:
@@ -67,15 +70,20 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
+        ECR_REGISTRY1: themedium-ecr-django
+        IMAGE_TAG1: v2.0
+        ECR_REGISTRY2: themedium-ecr-nginx
+        IMAGE_TAG2: v2.0
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        docker build -t $ECR_REGISTRY1/$ECR_REPOSITORY1:$IMAGE_TAG1 .
+        docker push $ECR_REGISTRY1/$ECR_REPOSITORY1:$IMAGE_TAG1
+        echo "::set-output name=image::$ECR_REGISTRY1/$ECR_REPOSITORY1:$IMAGE_TAG1"
+        docker build -t $ECR_REGISTRY2/$ECR_REPOSITORY2:$IMAGE_TAG2 .
+        docker push $ECR_REGISTRY2/$ECR_REPOSITORY2:$IMAGE_TAG2
+        echo "::set-output name=image::$ECR_REGISTRY2/$ECR_REPOSITORY2:$IMAGE_TAG2"
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
