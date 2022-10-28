@@ -31,7 +31,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: themedium-ecr-django
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: sha256:3f0e273f18fd67a66b0860aad1e2baee179b58911fb56d40cbe02f7320152832
       run: |
         # Build a docker container and
         # push it to ECR so that it can
