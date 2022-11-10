@@ -27,5 +27,5 @@ services:
             - /srv/docker-server
             - /var/log/uwsgi
             
-            
+           
            
